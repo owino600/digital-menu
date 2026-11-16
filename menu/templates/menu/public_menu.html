@@ -1,0 +1,410 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#173b32">
+    <title>Burch Resort | Digital Menu</title>
+
+    <style>
+        :root {
+            --green: #874653;
+            --green-light: #A96773;
+            --gold: #C9A878;
+            --cream: #FBF7F5;
+            --text: #352C2E;
+            --muted: #817477;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .hero {
+            background: var(--green);
+            color: var(--white);
+            text-align: center;
+            padding: 28px 20px 24px;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .brand {
+            font-family: Georgia, serif;
+            font-size: 29px;
+            letter-spacing: 2.5px;
+            margin: 0;
+        }
+
+        .brand-subtitle {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 11px;
+            margin-top: 9px;
+        }
+
+        .welcome {
+            margin: 13px auto 0;
+            max-width: 500px;
+            line-height: 1.5;
+            color: #e5e9e5;
+            font-size: 12px;
+        }
+
+        .menu-heading {
+            text-align: center;
+            padding: 20px 16px 12px;
+        }
+
+        .menu-heading h2 {
+            font-family: Georgia, serif;
+            font-size: 23px;
+            color: var(--green);
+            margin: 0 0 5px;
+        }
+
+        .menu-heading p {
+            color: var(--muted);
+            font-size: 11px;
+            margin: 0;
+        }
+
+        .category-nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(250, 248, 243, 0.97);
+            border-bottom: 1px solid #e8e3d9;
+            padding: 13px 12px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            justify-content: flex-start;
+            scrollbar-width: none;
+        }
+
+        .category-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-nav a {
+            color: var(--green);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 10px 16px;
+            border: 1px solid #d8d5cb;
+            border-radius: 24px;
+            flex-shrink: 0;
+        }
+
+        .category-nav a:hover {
+            background: var(--green);
+            color: var(--white);
+        }
+
+        .menu-container {
+            width: min(1100px, 94%);
+            margin: 0 auto;
+            padding: 22px 0 55px;
+        }
+
+        .category-section {
+            margin: 25px 0 45px;
+            scroll-margin-top: 80px;
+        }
+
+        .category-title {
+            font-family: Georgia, serif;
+            font-size: 25px;
+            color: var(--green);
+            padding-bottom: 12px;
+            border-bottom: 1px solid #ded8ca;
+            margin-bottom: 22px;
+        }
+
+        .category-description {
+            color: var(--muted);
+            font-size: 13px;
+            margin: -10px 0 20px;
+            line-height: 1.6;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .menu-item {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(65, 35, 40, 0.08);
+            border: 1px solid #eee5e3;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .menu-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 9px 22px rgba(65, 35, 40, 0.13);
+        }
+
+        .item-image {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4 / 3
+            object-fit: contain;
+            display: block;
+            background: #f3eeeb;
+        }
+
+        .image-placeholder {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            background: #eeece5;
+            font-size: 13px;
+        }
+
+        .item-content {
+            padding: 11px 13px 13px;
+        }
+
+        .item-name {
+            font-family: Georgia, serif;
+            color: var(--green);
+            font-size: 16px;
+            margin: 0 0 6px;
+        }
+
+        .item-description {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.45;
+            margin: 0 0 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .item-price {
+            color: var(--green);
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .item-details {
+            margin-top: 10px;
+        }
+
+        .item-details summary {
+            display: inline-block;
+            cursor: pointer;
+            background: var(--green);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            list-style: none;
+            transition: background 0.2s ease;
+        }
+
+        .item-details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .item-details summary:hover {
+            background: var(--green-light);
+        }
+
+        .details-content {
+            padding: 12px 2px 3px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .empty-menu {
+            text-align: center;
+            padding: 60px 15px;
+            color: var(--muted);
+        }
+
+        .footer {
+            background: var(--green);
+            color: #e5e9e5;
+            text-align: center;
+            padding: 28px 15px;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer strong {
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 900px) {
+            .items-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding: 24px 15px 21px;
+            }
+
+            .brand {
+                font-size: 25px;
+            }
+
+            .welcome {
+                font-size: 11px;
+            }
+
+            .menu-heading {
+                padding: 27px 15px 15px;
+            }
+
+            .menu-heading h2 {
+                font-size: 23px;
+            }
+
+            .items-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .item-image {
+                height: 190px;
+            }
+
+            .menu-container {
+                width: 92%;
+            }
+    }
+    </style>
+</head>
+
+<body>
+
+    <header class="hero">
+        <h1 class="brand">BURCH RESORT</h1>
+        <div class="brand-subtitle"> TRANQUILITY AWAITS </div>
+
+        <p class="welcome">
+            Welcome to Burch Resort. Explore our menu and discover
+            a selection of dishes prepared to make your dining
+            experience memorable.
+        </p>
+    </header>
+
+    <section class="menu-heading">
+        <h2>Our Menu</h2>
+        <p>Discover something delicious</p>
+    </section>
+
+    {% if categories %}
+        <nav class="category-nav" aria-label="Menu categories">
+            {% for category in categories %}
+                <a href="#category-{{ category.pk }}">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+        </nav>
+
+        <main class="menu-container">
+            {% for category in categories %}
+                <section
+                    class="category-section"
+                    id="category-{{ category.pk }}"
+                >
+                    <h2 class="category-title">
+                        {{ category.name }}
+                    </h2>
+
+                    {% if category.description %}
+                        <p class="category-description">
+                            {{ category.description }}
+                        </p>
+                    {% endif %}
+
+                    <div class="items-grid">
+                        {% for item in category.available_items %}
+                            <article class="menu-item">
+
+                                {% if item.image %}
+                                    <img
+                                        class="item-image"
+                                        src="{{ item.image.url }}"
+                                        alt="{{ item.name }}"
+                                        loading="lazy"
+                                    >
+                                {% else %}
+                                    <div class="image-placeholder">
+                                        Image coming soon
+                                    </div>
+                                {% endif %}
+
+                                <div class="item-content">
+                                    <h3 class="item-name">
+                                        {{ item.name }}
+                                    </h3>
+
+                                    {% if item.description %}
+                                        <details class="item-details">
+                                            <summary>View Details</summary>
+                                            <div class="details-content">
+                                                {{ item.description|linebreaksbr }}
+                                            </div>
+                                        </details>
+                                    {% endif %}
+
+                                    <div class="item-price">
+                                        KSh {{ item.price|floatformat:2 }}
+                                    </div>
+                                </div>
+
+                            </article>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endfor %}
+        </main>
+
+    {% else %}
+        <div class="empty-menu">
+            <h2>Our menu is being updated</h2>
+            <p>Please check back shortly.</p>
+        </div>
+    {% endif %}
+
+    <footer class="footer">
+        <strong>BURCH RESORT</strong>
+        <div>Thank you for dining with us.</div>
+    </footer>
+
+</body>
+</html>
+
